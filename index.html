@@ -357,12 +357,101 @@
 <p>You can examine the differences between the two <code>readFileSync</code> function calls. Because the second one use <code>../</code> as its path, and these <code>./</code> and <code>../</code> are depended on the directory where you run the script. So the second one got an error.</p>
 <p>I pushed the example code on <a href="https://github.com/quboqin/webpack-learning" target="_blank" rel="noopener">Github</a>, you can check out on the <code>pathtest</code> branch.</p>
 <h2 id="The-Paths-in-the-webpack-config-js"><a href="#The-Paths-in-the-webpack-config-js" class="headerlink" title="The Paths in the webpack.config.js"></a>The Paths in the <code>webpack.config.js</code></h2><h4 id="Common-Options"><a href="#Common-Options" class="headerlink" title="Common Options"></a>Common Options</h4><p>The <code>Webpack</code> is a compiler which reads a file specified by <code>config.entry</code> and recursively builds a dependency graph and then packages all these artifacts into a group of bundles(or a single bundle). </p>
-<p><img src="/Webpack/webpack-module-bundler.png" width="50%" margin="auto"></p>
+<p><img src="/Setup-Webpack-from-Scratch/webpack-module-bundler.png" width="50%" margin="auto"></p>
 <p>So a bunch of options of <code>config</code> in the <code>webpack.config.js</code> are about how to find the the <strong>input files</strong> in our project folder, and the others are used to figure out where the <code>Webpack</code> keep the <strong>output files</strong>. Some of these properties give absolute paths, some of them are relative to other options.</p>
-<p>The table below gives some examples about the <strong>input</strong> options<br>| name | role | default value | dependency |<br>| - | - | - | - | - |<br>| context | The base directory, an absolute path, for resolving entry points and loaders from configuration. | The default value is <code>process.cwd()</code> but it’s recommended to replace it with an absolute address <code>context: path.resolve(__dirname, &#39;app&#39;)</code> |  |<br>| entry | The point or points to enter the application | | <code>context</code> If entry is an absolute address, the context will be ignored |<br>| template(html-webpack-plugin) | require path to the template. | ‘’ | <code>context</code> |</p>
+<p>The table below gives some examples about the <strong>input</strong> options</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>role</th>
+<th>default value</th>
+<th>dependency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>context</td>
+<td>The base directory, an absolute path, for resolving entry points and loaders from configuration.</td>
+<td>The default value is <code>process.cwd()</code> but it’s recommended to replace it with an absolute address <code>context: path.resolve(__dirname, &#39;app&#39;)</code></td>
+<td></td>
+</tr>
+<tr>
+<td>entry</td>
+<td>The point or points to enter the application</td>
+<td></td>
+<td><code>context</code> If entry is an absolute address, the context will be ignored</td>
+</tr>
+<tr>
+<td>template(html-webpack-plugin)</td>
+<td>require path to the template.</td>
+<td>‘’</td>
+<td><code>context</code></td>
+</tr>
+</tbody>
+</table>
 <p>When we discuss the <strong>output</strong>, we need to seperate 2 different situations. If we just let the <code>Webpack</code> package the bundle for us, then the <code>Webpack</code> create all <strong>output files</strong> on the disk. But<br>when we use the <code>webpack-dev-server</code>, the web server will mount these <strong>output files</strong> in the memory. The options are somewhat different.</p>
-<p>Now we use <code>webpack webpack --config ./build/webpack.config.js</code> to create a distribute folder, here is the options we need to specify.<br>| name | role | default value | dependency |<br>| - | - | - | - | - |<br>| output.path | The output directory as an absolute path. | | |<br>| output.filename | This option determines the name of each output bundle. | | The bundle is written to the directory specified by the <code>output.path</code> option |<br>| outputPath(file-loader) | | | <code>output.path</code> |<br>| filename(HtmlWebpackPlugin) | | | <code>output.path</code> |</p>
-<p>When we start the <code>webpack-dev-server</code>, some of the options are different.<br>| name | role | default value | dependency |<br>| - | - | - | - | - |<br>| devServer.publicPath | Its role is same as the role of <code>output.path</code>. The differency is that it is mounted in the memory and as part of URL address which only be accessed from a web browser through the <code>express</code> server. | ‘/‘ | |<br>| devServer.contentBase | Tell the server where to serve content from. This is only necessary if you want to serve static files. devServer.publicPath will be used to determine where the bundles should be served from, and takes precedence. <strong>I think this option is useless and confused</strong>. Maybe when some resources are not packaged into our bundle, but can be accessed under the run time. In this case, maybe we would use this option. | | |</p>
+<p>Now we use <code>webpack webpack --config ./build/webpack.config.js</code> to create a distribute folder, here is the options we need to specify.</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>role</th>
+<th>default value</th>
+<th>dependency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>output.path</td>
+<td>The output directory as an absolute path.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>output.filename</td>
+<td>This option determines the name of each output bundle.</td>
+<td></td>
+<td>The bundle is written to the directory specified by the <code>output.path</code> option</td>
+</tr>
+<tr>
+<td>outputPath(file-loader)</td>
+<td></td>
+<td></td>
+<td><code>output.path</code></td>
+</tr>
+<tr>
+<td>filename(HtmlWebpackPlugin)</td>
+<td></td>
+<td></td>
+<td><code>output.path</code></td>
+</tr>
+</tbody>
+</table>
+<p>When we start the <code>webpack-dev-server</code>, some of the options are different.</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>role</th>
+<th>default value</th>
+<th>dependency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>devServer.publicPath</td>
+<td>Its role is same as the role of <code>output.path</code>. The differency is that it is mounted in the memory and as part of URL address which only be accessed from a web browser through the <code>express</code> server.</td>
+<td>‘/‘</td>
+<td></td>
+</tr>
+<tr>
+<td>devServer.contentBase</td>
+<td>Tell the server where to serve content from. This is only necessary if you want to serve static files. devServer.publicPath will be used to determine where the bundles should be served from, and takes precedence. <strong>I think this option is useless and confused</strong>. Maybe when some resources are not packaged into our bundle, but can be accessed under the run time. In this case, maybe we would use this option.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h4 id="The-Most-Confused-Part-publicPath"><a href="#The-Most-Confused-Part-publicPath" class="headerlink" title="The Most Confused Part, publicPath"></a>The Most Confused Part, <code>publicPath</code></h4><p>The most confused parts in the config of the <code>Webpack</code> are the two <code>publicPath</code>s. One is the <code>devServer.publicPath</code> we mention it before. The other is the <code>output.publicPath</code>. The latter in most case is a placeholder used by <code>loaders</code> and/or <code>plugins</code> to prefix(update) the URLs in the modules. In the <code>production</code> mode, we usually use this option to specify the CDN address, so we don’t need to manually update the URLs in all the files to point to the CDN. </p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">  output: &#123;</span><br><span class="line">    <span class="comment">// One of the below</span></span><br><span class="line">    publicPath: <span class="string">'https://cdn.example.com/assets/'</span>, <span class="comment">// CDN (always HTTPS)</span></span><br><span class="line">    publicPath: <span class="string">'//cdn.example.com/assets/'</span>, <span class="comment">// CDN (same protocol)</span></span><br><span class="line">    publicPath: <span class="string">'/assets/'</span>, <span class="comment">// server-relative</span></span><br><span class="line">    publicPath: <span class="string">'assets/'</span>, <span class="comment">// relative to HTML page</span></span><br><span class="line">    publicPath: <span class="string">'../assets/'</span>, <span class="comment">// relative to HTML page</span></span><br><span class="line">    publicPath: <span class="string">''</span>, <span class="comment">// relative to HTML page (same directory)</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>But, here is alway a <strong>But</strong>. When the <code>output.publicPath</code> is not a CDN address, it will influence the output result when we start the <code>webpack-dev-server</code>. I’m really bad at googling staff, I tried to find some articles, but they didn’t meet my expectations. And the document of <code>Webpack</code> is also terrible.</p>
@@ -371,19 +460,19 @@
 <li>If we assign the values for <code>devServer.publicPath</code> and <code>output.publicPath</code>, but the values are different. The html cabn be loaded successfully, but the bundle and the other resource can not be accessed.<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">  output: &#123;</span><br><span class="line">    publicPath: <span class="string">'/notdist/'</span>,</span><br><span class="line"></span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'../dist'</span>),</span><br><span class="line">    filename: <span class="string">'[name].bundle.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    <span class="comment">// static files served from here</span></span><br><span class="line">    publicPath: <span class="string">'/dist/'</span>,</span><br><span class="line"></span><br><span class="line">    port: <span class="number">2000</span>,</span><br><span class="line">    stats: <span class="string">'errors-only'</span>,</span><br><span class="line">    open: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p><img src="/Webpack/webpack-error-1.png" width="80%" margin="auto"></p>
+<p><img src="/Setup-Webpack-from-Scratch/webpack-error-1.png" width="80%" margin="auto"></p>
 <ol>
 <li>If both of these <code>publicPath</code>s are not given values, the default value of the <code>devServer.publicPath</code> is ‘/‘, and the default value of the <code>output.publicPath</code> is ‘’. That will be ok. But if we assigned a value to the <code>output.publicPath</code>, but didn’t give a value to the <code>devServer.publicPath</code>, the <code>devServer.publicPath</code> will use the <code>output.publicPath</code> value!<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">  output: &#123;</span><br><span class="line">    publicPath: <span class="string">'/dist/'</span>,</span><br><span class="line"></span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'../dist'</span>),</span><br><span class="line">    filename: <span class="string">'[name].bundle.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    <span class="comment">// static files served from here</span></span><br><span class="line">    <span class="comment">// publicPath: '/dist/',</span></span><br><span class="line"></span><br><span class="line">    port: <span class="number">2000</span>,</span><br><span class="line">    stats: <span class="string">'errors-only'</span>,</span><br><span class="line">    open: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span> NODE_ENV=development webpack-dev-server --config ./build/webpack.config.js</span><br><span class="line"></span><br><span class="line">clean-webpack-plugin: /Users/qinqubo/Magicefire/Playground/webpack-learning/dist has been removed.</span><br><span class="line">ℹ ｢wds｣: Project is running at http://localhost:2000/</span><br><span class="line">ℹ ｢wds｣: webpack output is served from /dist/</span><br><span class="line">⚠ ｢wdm｣:</span><br><span class="line">ℹ ｢wdm｣: Compiled with warnings.</span><br></pre></td></tr></table></figure>
-<p><img src="/Webpack/webpack-error-2.png" width="80%" margin="auto"><br>It is not an error, but it is very confused:(</p>
+<p><img src="/Setup-Webpack-from-Scratch/webpack-error-2.png" width="80%" margin="auto"><br>It is not an error, but it is very confused:(</p>
 <ol>
 <li>The example before, we start the <code>output.publicPath</code> with the ‘/‘, so it is a server-relative path. So far everything is fine. But if we set this option using an address which is relative to HTML page, like ‘dist/‘<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">  output: &#123;</span><br><span class="line">    publicPath: <span class="string">'dist/'</span>,</span><br><span class="line"></span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'../dist'</span>),</span><br><span class="line">    filename: <span class="string">'[name].bundle.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    <span class="comment">// static files served from here</span></span><br><span class="line">    <span class="comment">// publicPath: '/dist/',</span></span><br><span class="line">    <span class="comment">// open app in localhost:2000</span></span><br><span class="line">    port: <span class="number">2000</span>,</span><br><span class="line">    stats: <span class="string">'errors-only'</span>,</span><br><span class="line">    open: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span> NODE_ENV=development webpack-dev-server --config ./build/webpack.config.js</span><br><span class="line"></span><br><span class="line">clean-webpack-plugin: /Users/qinqubo/Magicefire/Playground/webpack-learning/dist has been removed.</span><br><span class="line">ℹ ｢wds｣: Project is running at http://localhost:2000/</span><br><span class="line">ℹ ｢wds｣: webpack output is served from /dist/</span><br><span class="line">ℹ ｢wdm｣: wait until bundle finished: /dist/index.html</span><br><span class="line">⚠ ｢wdm｣:</span><br><span class="line">ℹ ｢wdm｣: Compiled with warnings.</span><br></pre></td></tr></table></figure>
-<p><code>loaders</code> and <code>plugins</code> will update URLs with the html-relative path, here is the ‘dist/‘, but webpack output is served from ‘/dist/‘, we can access the html file at <code>http://localhost:2000/dist/index.html</code>, The linkers in this html file are pointing to the wrong addresses, such as <code>src=&quot;dist/assets/media/webpacklogo.png&quot;</code> or <code>src=&quot;dist/app.bundle.js&quot;</code> It is a relative path to the html file, but the html file and the bundle filea are already in the <code>dist</code>, and there is no sub-folder called <code>dist</code><br><img src="/Webpack/webpack-error-3.png" width="80%" margin="auto"><br><img src="/Webpack/webpack-error-4.png" width="80%" margin="auto"></p>
+<p><code>loaders</code> and <code>plugins</code> will update URLs with the html-relative path, here is the ‘dist/‘, but webpack output is served from ‘/dist/‘, we can access the html file at <code>http://localhost:2000/dist/index.html</code>, The linkers in this html file are pointing to the wrong addresses, such as <code>src=&quot;dist/assets/media/webpacklogo.png&quot;</code> or <code>src=&quot;dist/app.bundle.js&quot;</code> It is a relative path to the html file, but the html file and the bundle filea are already in the <code>dist</code>, and there is no sub-folder called <code>dist</code><br><img src="/Setup-Webpack-from-Scratch/webpack-error-3.png" width="80%" margin="auto"><br><img src="/Setup-Webpack-from-Scratch/webpack-error-4.png" width="80%" margin="auto"></p>
 <p>It is a disaster. My suggestion is avoiding using the <code>derServer.publicPath</code> and not using <code>output.publicPath</code> under the <code>development</code> mode. The only purpose of the <code>output.publicPath</code> is setting CDN address under the <code>production</code> mode.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> env = process.env.NODE_ENV      </span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">  output: &#123;</span><br><span class="line">    <span class="comment">// absolute path declaration</span></span><br><span class="line">    publicPath: env === <span class="string">'development'</span> ? <span class="string">''</span> : <span class="string">'https://cdn.example.com/assets/'</span>,</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'../dist'</span>),</span><br><span class="line">    filename: <span class="string">'[name].bundle.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h4 id="The-path-of-CleanWebpackPlugin"><a href="#The-path-of-CleanWebpackPlugin" class="headerlink" title="The path of CleanWebpackPlugin"></a>The path of CleanWebpackPlugin</h4><p>If we use <code>CleanWebpackPlugin</code> to remove the ‘dist’ folder, we must set the <code>root</code> value in its options when the config file is not in the root of the project.</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">plugins: [</span><br><span class="line"> <span class="comment">// cleaning up only 'dist' folder</span></span><br><span class="line"> <span class="keyword">new</span> CleanWebpackPlugin([<span class="string">'dist'</span>], &#123;</span><br><span class="line">   root: path.resolve(__dirname, <span class="string">'../'</span>),</span><br><span class="line"> &#125;),</span><br></pre></td></tr></table></figure>
