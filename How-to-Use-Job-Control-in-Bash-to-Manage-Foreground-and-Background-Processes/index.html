@@ -94,20 +94,26 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Qubo Qin&#39;s Blog">
-<meta property="og:url" content="http://blog.magicefire.com/tags/California/index.html">
+  <meta name="description" content="In the situation when I use SSH to log on a remote computer or a server, I start a task in the foreground. The task is more bigger and complex, it will not be finished in a short peroid of time, but I">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Use Job Control in Bash to Manage Foreground and Background Processes">
+<meta property="og:url" content="http://blog.magicefire.com/How-to-Use-Job-Control-in-Bash-to-Manage-Foreground-and-Background-Processes/index.html">
 <meta property="og:site_name" content="Qubo Qin&#39;s Blog">
+<meta property="og:description" content="In the situation when I use SSH to log on a remote computer or a server, I start a task in the foreground. The task is more bigger and complex, it will not be finished in a short peroid of time, but I">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://blog.magicefire.com/How-to-Use-Job-Control-in-Bash-to-Manage-Foreground-and-Background-processes/job-control.png">
+<meta property="og:updated_time" content="2019-02-20T06:37:31.946Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Qubo Qin&#39;s Blog">
+<meta name="twitter:title" content="How to Use Job Control in Bash to Manage Foreground and Background Processes">
+<meta name="twitter:description" content="In the situation when I use SSH to log on a remote computer or a server, I start a task in the foreground. The task is more bigger and complex, it will not be finished in a short peroid of time, but I">
+<meta name="twitter:image" content="http://blog.magicefire.com/How-to-Use-Job-Control-in-Bash-to-Manage-Foreground-and-Background-processes/job-control.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://blog.magicefire.com/tags/California/">
+  <link rel="canonical" href="http://blog.magicefire.com/How-to-Use-Job-Control-in-Bash-to-Manage-Foreground-and-Background-Processes/">
 
 
 
@@ -117,7 +123,7 @@
   };
 </script>
 
-  <title>Tag: California | Qubo Qin's Blog</title>
+  <title>How to Use Job Control in Bash to Manage Foreground and Background Processes | Qubo Qin's Blog</title>
   
 
 
@@ -165,7 +171,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -242,19 +248,6 @@
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -279,56 +272,204 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>California<small>Tag</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.magicefire.com/How-to-Use-Job-Control-in-Bash-to-Manage-Foreground-and-Background-Processes/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qubo Qin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qubo Qin's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/my-first-blog/" itemprop="url">
-            
-              <span itemprop="name">my first blog</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">How to Use Job Control in Bash to Manage Foreground and Background Processes
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-03-07T16:08:43-08:00" content="2018-03-07">
-          03-07
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-19 21:02:18 / Modified: 22:37:31" itemprop="dateCreated datePublished" datetime="2019-02-19T21:02:18-08:00">2019-02-19</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>In the situation when I use SSH to log on a remote computer or a server, I start a task in the foreground. The task is more bigger and complex, it will not be finished in a short peroid of time, but I need to close the terminal for some reasons. If I close the terminal, the process will be terminate too. I don’t want to stop it right now, how can I handle this situation?</p>
+<p>Before you can deal with this case, you mush have some background knowledge about job control in Bash. </p>
+<p>There 4 ways taht can terminate processes in our system.</p>
+<ol>
+<li>In a terminal, hold the control key, and press ‘c’, this will stop the process that we have started in the foreground.</li>
+<li><p>Passing signals to a process with the <code>kill</code> command.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -9 pid</span><br></pre></td></tr></table></figure>
+<p>or</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -KILL pid</span><br></pre></td></tr></table></figure>
+<p><code>KILL</code> is equal to 9.</p>
+</li>
+</ol>
+<p>You can also stop it with these arguments<br>  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -15 pid</span><br></pre></td></tr></table></figure></p>
+<p>  or<br>  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -TERM pid</span><br></pre></td></tr></table></figure></p>
+<p>  <code>TERM</code> is equal to 15 here.</p>
+<ol>
+<li>Closing the terminal<br>Because the process is tied with the terminal instance that started it, when the terminal is closed, it will send a SIGUP signal to all of the processes tied to it.</li>
+</ol>
+<p>Now I have a process running in the foreground. We need to keep it running when we close the therminal. Before we close the terminal, we will take sevelral steps to change it status, so when we come back, it will not be stopped by us. </p>
+<ol>
+<li>Ctrl-Z -&gt; send a SIGSTP signal to the process, and push it back into the backgroud, then the process will be stopped.</li>
+<li>bg -&gt; resume the process in the background again.</li>
+<li>You can type <code>jobs</code> to check the job and get its job number.</li>
+<li>disown %jobNUmber -&gt; detach the job from the terminal<br>The command <code>disown</code> will immune the SIGUP signal. Now we can close the terminal safely. </li>
+</ol>
+<p>When we back, we can use the command <code>top</code>, <code>ps aux</code>, or <code>pgrep -a name</code>, to get the PID of the process that we detached before. But now we can only to kill it:(. So if you want to monitor the status of this process, you’s better to redirect its output into a file.</p>
+<p>When we run a process that we want it be detached before we close the terminal, just type<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup ping -i 5 google.com &amp;</span><br></pre></td></tr></table></figure></p>
+<p>Cheat sheet Diagram<br><img src="/How-to-Use-Job-Control-in-Bash-to-Manage-Foreground-and-Background-processes/job-control.png" width="30%" padding="5px"></p>
+<h4 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h4><p><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ps-kill-and-nice-to-manage-processes-in-linux" target="_blank" rel="noopener">How To Use ps, kill, and nice to Manage Processes in Linux</a></p>
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-use-bash-s-job-control-to-manage-foreground-and-background-processes" target="_blank" rel="noopener">How To Use Bash’s Job Control to Manage Foreground and Background Processes</a></p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Setup-Webpack-from-Scratch/" rel="next" title="Setup Webpack from Scratch">
+                <i class="fa fa-chevron-left"></i> Setup Webpack from Scratch
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -349,8 +490,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -490,6 +640,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#reference"><span class="nav-number">1.</span> <span class="nav-text">reference</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -643,6 +810,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
 
   
 
@@ -653,6 +824,8 @@
 
   
 
+
+  
 
 
   
