@@ -328,12 +328,24 @@
                 
               
 
-              <time title="Created: 2019-02-19 21:02:18 / Modified: 22:40:40" itemprop="dateCreated datePublished" datetime="2019-02-19T21:02:18-08:00">2019-02-19</time>
+              <time title="Created: 2019-02-19 21:02:18" itemprop="dateCreated datePublished" datetime="2019-02-19T21:02:18-08:00">2019-02-19</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-20 08:55:12" itemprop="dateModified" datetime="2019-02-20T08:55:12-08:00">2019-02-20</time>
               
             
           </span>
@@ -350,7 +362,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/cmd-line/" itemprop="url" rel="index"><span itemprop="name">cmd line</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Shell/" itemprop="url" rel="index"><span itemprop="name">Shell</span></a></span>
 
                 
                 
@@ -387,35 +399,46 @@
       
         
           
-            <p>In the situation when I use SSH to log on a remote computer or a server, I start a task in the foreground. The task is more bigger and complex, it will not be finished in a short peroid of time, but I need to close the terminal for some reasons. If I close the terminal, the process will be terminate too. I don’t want to stop it right now, how can I handle this situation?</p>
-<p>Before you can deal with this case, you mush have some background knowledge about job control in Bash. </p>
-<p>There 4 ways taht can terminate processes in our system.</p>
+            <h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>We usually encounter the following situation when we use SSH to log on to a remote computer or a server, then start a task in the foreground, and the task is more complex and bigger, it will not be finished in a short peroid of time, but we need to close the terminal for some reasons. If we close the terminal, the process will be terminated too. We don’t want to stop it right now, how can we handle this problem?</p>
+<p>Before dealing with this case, you must have some background knowledge about job control in Bash. Let us create a bash job first:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping -i 5 google.com</span><br></pre></td></tr></table></figure></p>
+<h3 id="Terminating-a-Process"><a href="#Terminating-a-Process" class="headerlink" title="Terminating a Process"></a>Terminating a Process</h3><p>There are 3 ways that can terminate processes in our system.</p>
 <ol>
-<li>In a terminal, hold the control key, and press ‘c’, this will stop the process that we have started in the foreground.</li>
-<li><p>Passing signals to a process with the <code>kill</code> command.</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -9 pid</span><br></pre></td></tr></table></figure>
-<p>or</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -KILL pid</span><br></pre></td></tr></table></figure>
-<p><code>KILL</code> is equal to 9.</p>
+<li><p>In a terminal, hold the control key, and press ‘c’. This will stop the process that we have started in the foreground.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">➜  Magicefire ping -i 5 google.com</span><br><span class="line">PING google.com (172.217.12.46): 56 data bytes</span><br><span class="line">64 bytes from 172.217.12.46: icmp_seq=0 ttl=52 time=64.537 ms</span><br><span class="line">64 bytes from 172.217.12.46: icmp_seq=1 ttl=52 time=63.335 ms</span><br><span class="line">64 bytes from 172.217.12.46: icmp_seq=2 ttl=52 time=62.896 ms</span><br><span class="line">64 bytes from 172.217.12.46: icmp_seq=3 ttl=52 time=64.476 ms</span><br><span class="line">64 bytes from 172.217.12.46: icmp_seq=4 ttl=52 time=63.338 ms</span><br><span class="line">64 bytes from 172.217.12.46: icmp_seq=5 ttl=52 time=62.164 ms</span><br><span class="line">^C</span><br><span class="line">--- google.com ping statistics ---</span><br><span class="line">6 packets transmitted, 6 packets received, 0.0% packet loss</span><br><span class="line">round-trip min/avg/max/stddev = 62.164/63.458/64.537/0.839 ms</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Passing signals to a process with the <code>kill</code> command. Open another terminal, you can run these two commands here, <code>-KILL</code> equals 9.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> -9 pid</span><br><span class="line"><span class="built_in">kill</span> -KILL pid</span><br></pre></td></tr></table></figure>
+<p>In the previous terminal, the process will receive a SIGINT signal, and it will be killed immediately.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">➜  Magicefire ping -i 5 google.com</span><br><span class="line">PING google.com (172.217.12.46): 56 data bytes</span><br><span class="line">64 bytes from 172.217.12.46: icmp_seq=0 ttl=52 time=61.794 ms</span><br><span class="line">64 bytes from 172.217.12.46: icmp_seq=1 ttl=52 time=62.411 ms</span><br><span class="line">64 bytes from 172.217.12.46: icmp_seq=2 ttl=52 time=62.325 ms</span><br><span class="line">64 bytes from 172.217.12.46: icmp_seq=3 ttl=52 time=101.183 ms</span><br><span class="line">64 bytes from 172.217.12.46: icmp_seq=4 ttl=52 time=63.707 ms</span><br><span class="line">64 bytes from 172.217.12.46: icmp_seq=5 ttl=52 time=62.623 ms</span><br><span class="line">[1]    91977 killed     ping -i 5 google.com</span><br></pre></td></tr></table></figure>
+<p>You can also stop it with these arguments:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kill -15 pid</span><br><span class="line">kill -TERM pid</span><br></pre></td></tr></table></figure>
+<p><code>-TERM</code> equals 15 here.</p>
+<p>The process will receive a SIGSTP, it will be terminated by the system.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">➜  Magicefire ping -i 5 google.com</span><br><span class="line">PING google.com (172.217.1.142): 56 data bytes</span><br><span class="line">64 bytes from 172.217.1.142: icmp_seq=0 ttl=52 time=62.230 ms</span><br><span class="line">64 bytes from 172.217.1.142: icmp_seq=1 ttl=52 time=63.578 ms</span><br><span class="line">64 bytes from 172.217.1.142: icmp_seq=2 ttl=52 time=64.368 ms</span><br><span class="line">[1]    92134 terminated  ping -i 5 google.com</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Closing the terminal<br>Because the process is tied with the terminal instance that started it, when the terminal is closed, it will send a SIGUP signal to all of the processes tied to it.</p>
 </li>
 </ol>
-<p>You can also stop it with these arguments<br>  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -15 pid</span><br></pre></td></tr></table></figure></p>
-<p>  or<br>  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -TERM pid</span><br></pre></td></tr></table></figure></p>
-<p>  <code>TERM</code> is equal to 15 here.</p>
+<h3 id="The-Solution"><a href="#The-Solution" class="headerlink" title="The Solution"></a>The Solution</h3><p>Now we have a process running in the foreground, we need to keep it running when we close the therminal. Before we close the terminal, we will take seveval steps to change it status, so it will not be stopped by ourselves. </p>
 <ol>
-<li>Closing the terminal<br>Because the process is tied with the terminal instance that started it, when the terminal is closed, it will send a SIGUP signal to all of the processes tied to it.</li>
+<li><p>Ctrl-Z → send a SIGSTP signal to the process, and push the process back into the backgroud(job), then the process will be stopped.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  Magicefire ping -i 5 google.com</span><br><span class="line">PING google.com (172.217.6.174): 56 data bytes</span><br><span class="line">64 bytes from 172.217.6.174: icmp_seq=0 ttl=52 time=63.851 ms</span><br><span class="line">64 bytes from 172.217.6.174: icmp_seq=1 ttl=52 time=64.006 ms</span><br><span class="line">64 bytes from 172.217.6.174: icmp_seq=2 ttl=52 time=64.434 ms</span><br><span class="line">64 bytes from 172.217.6.174: icmp_seq=3 ttl=52 time=64.592 ms</span><br><span class="line">^Z</span><br><span class="line">[1]  + 92544 suspended  ping -i 5 google.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  Magicefire <span class="built_in">jobs</span></span><br><span class="line">[1]  + suspended  ping -i 5 google.com</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>bg → resume the process in the background again.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">➜  Magicefire bg</span><br><span class="line">[1]  + 92544 continued  ping -i 5 google.com</span><br><span class="line">➜  Magicefire 64 bytes from 172.217.6.174: icmp_seq=4 ttl=52 time=63.830 ms</span><br><span class="line"></span><br><span class="line">➜  Magicefire jobs64 bytes from 172.217.6.174: icmp_seq=5 ttl=52 time=64.827 ms</span><br><span class="line"></span><br><span class="line">[1]  + running    ping -i 5 google.com</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>You can type <code>jobs</code> to check the job and get its job number.</p>
+</li>
+<li><p>disown %jobNUmber -&gt; detach the job from the terminal</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">disown</span> %1</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<p>Now I have a process running in the foreground. We need to keep it running when we close the therminal. Before we close the terminal, we will take sevelral steps to change it status, so when we come back, it will not be stopped by us. </p>
-<ol>
-<li>Ctrl-Z -&gt; send a SIGSTP signal to the process, and push it back into the backgroud, then the process will be stopped.</li>
-<li>bg -&gt; resume the process in the background again.</li>
-<li>You can type <code>jobs</code> to check the job and get its job number.</li>
-<li>disown %jobNUmber -&gt; detach the job from the terminal<br>The command <code>disown</code> will immune the SIGUP signal. Now we can close the terminal safely. </li>
-</ol>
-<p>When we back, we can use the command <code>top</code>, <code>ps aux</code>, or <code>pgrep -a name</code>, to get the PID of the process that we detached before. But now we can only to kill it:(. So if you want to monitor the status of this process, you’s better to redirect its output into a file.</p>
-<p>When we run a process that we want it be detached before we close the terminal, just type<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup ping -i 5 google.com &amp;</span><br></pre></td></tr></table></figure></p>
-<p>Cheat sheet Diagram<br><img src="/How-to-Use-Job-Control-in-Bash-to-Manage-Foreground-and-Background-processes/job-control.png" width="30%" padding="5px"></p>
-<h4 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h4><p><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ps-kill-and-nice-to-manage-processes-in-linux" target="_blank" rel="noopener">How To Use ps, kill, and nice to Manage Processes in Linux</a></p>
+<p>The command <code>disown</code> will immune the SIGUP signal.<br>Now we can close the terminal safely. </p>
+<p>When we back, we can use the command <code>top</code>, <code>ps aux</code>, or <code>pgrep -a name</code>, to get the PID of the process that we detached from the closed terminal. But now the only thing we can do is killing it:(. So if you want to monitor the status of this process, you’d better to redirect its output into a file.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping -i 5 google.com &gt; ping.out</span><br></pre></td></tr></table></figure></p>
+<h3 id="Using-nohup"><a href="#Using-nohup" class="headerlink" title="Using nohup"></a>Using nohup</h3><p>If you know when starting the process that you will want to close the terminal before the process completes, you can start it using the nohup command.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup ping -i 5 google.com &gt; ping.out &amp;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Cheat-Sheet-Diagram"><a href="#Cheat-Sheet-Diagram" class="headerlink" title="Cheat Sheet Diagram"></a>Cheat Sheet Diagram</h3><p><img src="/How-to-Use-Job-Control-in-Bash-to-Manage-Foreground-and-Background-Processes/job-control.png" width="70%" padding="5px"></p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><p><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ps-kill-and-nice-to-manage-processes-in-linux" target="_blank" rel="noopener">How To Use ps, kill, and nice to Manage Processes in Linux</a></p>
 <p><a href="https://www.digitalocean.com/community/tutorials/how-to-use-bash-s-job-control-to-manage-foreground-and-background-processes" target="_blank" rel="noopener">How To Use Bash’s Job Control to Manage Foreground and Background Processes</a></p>
 
           
@@ -3393,6 +3416,8 @@
                     
                       
                     
+                      
+                    
                     <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
@@ -3482,7 +3507,23 @@
                     
                       
                     
-                    <span class="site-state-item-count">38</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
